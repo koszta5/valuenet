@@ -119,6 +119,7 @@ class DatabaseValueFinder:
 
     @staticmethod
     def _load_schema(database_schema_path, database_name):
+        print("LOADING", database_schema_path)
         with open(database_schema_path, 'r', encoding='utf-8') as json_file:
             schemas = json.load(json_file)
             for db_schema in schemas:

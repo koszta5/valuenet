@@ -131,7 +131,7 @@ def read_arguments_manual_inference():
     parser.add_argument('--seed', default=90, type=int)
     parser.add_argument('--data_set', default='spider', type=str)
     parser.add_argument('--batch_size', default=1, type=int)
-    parser.add_argument('--cuda', default=True, action='store_true')
+    parser.add_argument('--cuda', default=False, action='store_true')
     parser.add_argument('--conceptNet', default="data/spider/conceptNet", type=str)
 
     # encoder configuration

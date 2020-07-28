@@ -22,6 +22,12 @@ from spacy.lang.en import English
 
 from termcolor import colored
 
+import json
+import spacy
+from spacy import displacy
+from collections import Counter
+import en_core_web_sm
+nlp = en_core_web_sm.load()
 
 def _inference_semql(data_row, schemas, model):
     example = build_example(data_row, schemas)
@@ -47,9 +53,16 @@ def _tokenize_question(tokenizer, question):
     return [str(token) for token in question_tokenized]
 
 
-def _pre_process_values(row):
+def _get_entities(question):
     ner_results = remote_named_entity_recognition(row['question'])
     row['ner_extracted_values'] = ner_results['entities']
+
+def _get_entities_local(question):
+    doc = nlp(question)
+    return [{'type': 'spacy_' + ent.label_, 'name': ent.text} for ent in doc.ents]
+
+def _pre_process_values(row):
+    row['ner_extracted_values'] = _get_entities_local(row['question'])
 
     extracted_values = pre_process(row)
 
@@ -119,7 +132,7 @@ if __name__ == '__main__':
     model.to(device)
 
     # load the pre-trained parameters
-    model.load_state_dict(torch.load(args.model_to_load))
+    model.load_state_dict(torch.load(args.model_to_load,map_location=torch.device('cpu')))
     model.eval()
     print("Load pre-trained model from '{}'".format(args.model_to_load))
 
