@@ -15,8 +15,8 @@ from named_entity_recognition.handcrafted_heuristics import find_values_in_quote
 from named_entity_recognition.ner_extraction_data_dto import NerExtractionData
 from named_entity_recognition.database_value_finder.database_value_finder import DatabaseValueFinder
 
-DB_FOLDER = 'data/paulfitz/original/database'
-DB_SCHEMA = 'data/paulfitz/original/tables.json'
+DB_FOLDER = 'data/spider/original/database'
+DB_SCHEMA = 'data/spider/original/tables.json'
 
 all_database_value_finder = {}
 
